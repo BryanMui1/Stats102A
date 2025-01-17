@@ -59,7 +59,7 @@ is_prime <- function(x) {
   return(primes)
 }
 
-# helper function find, returns the index of the value if found in vector, otherwise returns 0
+# find(vec, value), helper function find, returns the index of the value if found in vector, otherwise returns 0
 find <- function(vec, value) {
   if (length(vec) < 1) {return(0)}
   for (i in 1:length(vec)) {
@@ -70,7 +70,7 @@ find <- function(vec, value) {
   return(0)
 }
 
-# returns a vector of the unique prime factors of a number x, with their primes and corresponding exponents
+# get_factors(x), returns a vector of the unique prime factors of a number x, with their primes and corresponding exponents
 get_factors <- function(x) {
   answer <- list(primes = c(), exponents = c())
   copy_x <- x
