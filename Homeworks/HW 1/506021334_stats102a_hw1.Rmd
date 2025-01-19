@@ -16,8 +16,9 @@ source("./506021334_stats102a_hw1.R")
 ```
 
 ```{r gcd}
-print(gcd(48, 18))
-print(gcd(180, 25))
+is.vector(c(1, 2, 3))
+print(gcd(48L, 18L)) # answer: 6
+print(gcd(180L, 25L)) # answer: 5
 ```
 ```{r gcdi}
 gcdi(c(16, 32, -58))
