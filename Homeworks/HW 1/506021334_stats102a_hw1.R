@@ -7,8 +7,12 @@ gcd <- function(x, y) {
   # Return:
   #   integer
   # Error handling:
-  if(!is.integer(x) || !is.integer(y)) {
-    warning("Inputs are not integers, coercing x and y using as.integer...")
+  if ((!is.numeric(x) && !is.integer(x)) || (!is.numeric(y) && !is.integer(y))) {
+    warning("gcd: Inputs are not integers/numeric, coercing x and y using as.integer...")
+    x <- as.integer(x)
+    y <- as.integer(y)
+  } else if (x %% 1 != 0 || y %% 1 != 0) {
+    warning("gcd: Inputs are not whole numbers, coercing x and y using as.integer...")
     x <- as.integer(x)
     y <- as.integer(y)
   }
@@ -25,6 +29,25 @@ gcdi <- function(v) {
   #   v: integer-vector(any length)
   # Return:
   #   integer
+  # Error handling:
+  if (is.list(v)) {
+    warning("input is not a vector, function returns NULL")
+    return(NULL)
+  }
+  type_check <- FALSE
+  for (i in 1:length(v)) {
+    if (!is.numeric(v[i]) && !is.integer(v[i])) {
+      warning("Non numeric value in vector, function returns NULL")
+      return(NULL)
+    } else if (v[i] %% 1 != 0) {
+      type_check <- TRUE
+      break
+    }
+  }
+  if(!is.vector(v) || type_check) {
+    warning("gcdi: Input is not an integer vector, coercing all values in vector v using as.integer...")
+    v <- as.integer(v)
+  }
   answer <- v[1]
   for (i in 2:(length(v))) {
     answer <- gcd(answer, v[i])
@@ -41,6 +64,13 @@ lcm <- function(x, y) {
   # Return:
   #   integer
   # the algorithm for lcm is |a * b|/gcd(a, b) according to Wikipedia
+  # Error handling:
+  print(typeof(x))
+  if ((!is.numeric(x) && !is.integer(x)) || (!is.numeric(y) && !is.integer(y))) {
+    warning("gcd: Inputs are not integers/numeric, coercing x and y using as.integer...")
+    x <- as.integer(x)
+    y <- as.integer(y)
+  } 
   answer <- abs(x * y) / gcd(x, y)
   answer
 }
@@ -54,6 +84,14 @@ add_2_frac <- function(n1, d1, n2, d2) {
   #   d2: integer(denominator2)
   # Return:
   #   list of length 2(num = numerator(integer), denom = denominator(integer))
+  # Error handling:
+  if(!is.integer(n1) || !is.integer(d1) || !is.integer(n2) || !is.integer(d2)) {
+    warning("add_2_frac: Found inputs that are not integers, coercing n1, d1, n2, d2 using as.integer...")
+    n1 <- as.integer(n1)
+    d1 <- as.integer(d1)
+    n2 <- as.integer(n2)
+    d2 <- as.integer(d2)
+  }
   denom <- lcm(d1, d2)
   numer <- ((denom / d1) * n1) + ((denom / d2) * n2)
   return(list(num = numer, denom = denom))
@@ -61,12 +99,17 @@ add_2_frac <- function(n1, d1, n2, d2) {
 
 # Problem 3
 is_prime <- function(x) {
-  # is_prime(x) takes in a vector x, returns a logical vector determining if each element is a prime number
+  # is_prime(x) takes in an integer vector x, returns a logical vector determining if each element is a prime number
   # Args: 
   #   x: integer vector x(any length)
   # Return:
   #   logical vector(length x)
   # this solution detects that 1, 2, and 3 are prime, then checks if the number is even or tries to divide every odd number to the sqrt of the function
+  # Error handling
+  # if(!is.vector(x) || !is.integer(x)) {
+  #   warning("is_prime: Input x is not an integer vector, coercing all values of x using as.integer...")
+  #   x <- as.integer(x)
+  # }
   primes <- rep(TRUE, length(x))
   for (i in 1:length(x)) {
     if (x[i] <= 1) {
@@ -77,10 +120,10 @@ is_prime <- function(x) {
       primes[i] <- FALSE
     } else {
       root <- floor(sqrt(x[i]))
-      if (root < 5) {
+      if (root < 3) {
         # number is prime
       } else {
-        for (j in seq(from = 5, to = root, by = 2)) {
+        for (j in seq(from = 3, to = root, by = 2)) {
           if ((x[i] %% j) == 0) {
             primes[i] <- FALSE
           }
@@ -98,6 +141,7 @@ find <- function(vec, value) {
   #   value: any type
   # Return:
   #   integer
+  # Error handling: vector of length 0 inputted
   if (length(vec) < 1) {return(0)}
   for (i in 1:length(vec)) {
     if (vec[i] == value) {
@@ -113,6 +157,11 @@ get_factors <- function(x) {
   #   x: integer
   # Return:
   #   list of length 2(primes = integer-vector(any length),exponents = integer-vector(any length))
+  # Error handling: 
+  if(!is.integer(x)) {
+    warning("get_factors: Input x is not an integer, coercing x using as.integer...")
+    x <- as.integer(x)
+  }
   answer <- list(primes = c(), exponents = c())
   copy_x <- x
   incr <- 2
@@ -120,7 +169,6 @@ get_factors <- function(x) {
     if ((copy_x %% incr) == 0) {
       # divide the number by the prime factor
       copy_x <- copy_x / incr
-      print(copy_x)
       # check if the factor already exists in the list
       indx <- find(answer$primes, incr)
       if (indx > 0) {
