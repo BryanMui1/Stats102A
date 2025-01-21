@@ -11,6 +11,10 @@ gcd <- function(x, y) {
     warning("gcd: Inputs are not integers/numeric, coercing x and y using as.integer...")
     x <- as.integer(x)
     y <- as.integer(y)
+    if (is.na(x) || is.na(y)) {
+      warning("gcd: Coercion resulted in NA values, function returns NULL")
+      return(NULL)
+    }
   } else if (x %% 1 != 0 || y %% 1 != 0) {
     warning("gcd: Inputs are not whole numbers, coercing x and y using as.integer...")
     x <- as.integer(x)
@@ -63,14 +67,21 @@ lcm <- function(x, y) {
   #   y: integer
   # Return:
   #   integer
-  # the algorithm for lcm is |a * b|/gcd(a, b) according to Wikipedia
   # Error handling:
-  print(typeof(x))
   if ((!is.numeric(x) && !is.integer(x)) || (!is.numeric(y) && !is.integer(y))) {
     warning("gcd: Inputs are not integers/numeric, coercing x and y using as.integer...")
     x <- as.integer(x)
     y <- as.integer(y)
-  } 
+    if (is.na(x) || is.na(y)) {
+      warning("gcd: Coercion resulted in NA values, function returns NULL")
+      return(NULL)
+    }
+  } else if (x %% 1 != 0 || y %% 1 != 0) {
+    warning("gcd: Inputs are not whole numbers, coercing x and y using as.integer...")
+    x <- as.integer(x)
+    y <- as.integer(y)
+  }
+  # the algorithm for lcm is |a * b|/gcd(a, b) according to Wikipedia
   answer <- abs(x * y) / gcd(x, y)
   answer
 }

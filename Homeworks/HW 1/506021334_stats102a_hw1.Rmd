@@ -15,14 +15,22 @@ knitr::opts_chunk$set(echo = TRUE)
 source("./506021334_stats102a_hw1.R")
 ```
 
+## Test Cases
+
+### Problem 1
+
+#### Function: gcd()
+
 ```{r gcd}
 # Error handling test case
-gcd(12.2, 14.9)
-gcd(TRUE, FALSE)
+gcd(12.2, 14.9) # Coerce to integers
+gcd("TRUE", FALSE) # NULL
 # in class test cases
-print(gcd(48, 18L)) # answer: 6
-print(gcd(180, 25L)) # answer: 5
+gcd(48, 18L) # 6
+gcd(180, 25L) # 5
+gcd(-42112, 56399) # 7
 ```
+#### Function: gcdi()
 
 ```{r gcdi}
 # Error handling test cases
@@ -31,12 +39,17 @@ gcdi(list("TRUE", 1, 2.6, FALSE))
 gcdi(c(2.2, 9.6, "HELLO"))
 # in class test cases
 gcdi(c(16, 32, -58)) # 2
-gcdi(c(4789, 6123, 199)) # 1
+gcdi(c(4789, 6123, 19927334)) # 1
 ```
+
+### Problem 2
+
+#### Function: lcm()
 
 ```{r lcm}
 # Error handling test case
-#lcm("HELLO", "WORLD")
+lcm("HELLO", "WORLD") # NULL
+lcm(148.9, 3452.123456) # 127,724, coerces by removing the decimal(rounding down)
 # in class test cases
 lcm(4, 6)
 lcm(123, 4920) # 14760
@@ -51,6 +64,8 @@ add_2_frac(1, 11, 1, 5) # list(num = 16, denom = 55)
 add_2_frac(1, 11, -1, 5) # list(num = -6, denom = 55)
 add_2_frac(2468, 3579, 1357, 2468) # 10947727 / 8832972
 ```
+
+### Problem 3
 
 ```{r is_prime}
 # Error handling test case
