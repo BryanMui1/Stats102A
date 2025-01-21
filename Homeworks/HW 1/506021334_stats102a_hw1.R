@@ -96,8 +96,18 @@ add_2_frac <- function(n1, d1, n2, d2) {
   # Return:
   #   list of length 2(num = numerator(integer), denom = denominator(integer))
   # Error handling:
-  if(!is.integer(n1) || !is.integer(d1) || !is.integer(n2) || !is.integer(d2)) {
-    warning("add_2_frac: Found inputs that are not integers, coercing n1, d1, n2, d2 using as.integer...")
+  if ((!is.numeric(n1) && !is.integer(n1)) || (!is.numeric(d1) && !is.integer(d1)) || (!is.numeric(n2) && !is.integer(n2)) || (!is.numeric(d2) && !is.integer(d2))) {
+    warning("add_2_frac: Inputs are not integers/numeric, coercing n1, d1, n2, d2 using as.integer...")
+    n1 <- as.integer(n1)
+    d1 <- as.integer(d1)
+    n2 <- as.integer(n2)
+    d2 <- as.integer(d2)
+    if (is.na(n1) || is.na(n2) || is.na(d1) || is.na(d2)) {
+      warning("add_2_frac: Coercion resulted in NA values, function returns NULL")
+      return(NULL)
+    }
+  } else if ((n1 %% 1 != 0) || (d1 %% 1 != 0) || (n2 %% 1 != 0) || (d2 %% 1 != 0)) {
+    warning("add_2_frac: Inputs are not whole numbers, coercing n1, d1, n2, d2 using as.integer...")
     n1 <- as.integer(n1)
     d1 <- as.integer(d1)
     n2 <- as.integer(n2)
@@ -117,10 +127,24 @@ is_prime <- function(x) {
   #   logical vector(length x)
   # this solution detects that 1, 2, and 3 are prime, then checks if the number is even or tries to divide every odd number to the sqrt of the function
   # Error handling
-  # if(!is.vector(x) || !is.integer(x)) {
-  #   warning("is_prime: Input x is not an integer vector, coercing all values of x using as.integer...")
-  #   x <- as.integer(x)
-  # }
+  if (is.list(x)) {
+    warning("input is not a vector, function returns NULL")
+    return(NULL)
+  }
+  type_check <- FALSE
+  for (i in 1:length(x)) {
+    if (!is.numeric(x[i]) && !is.integer(x[i])) {
+      warning("Non numeric value in vector, function returns NULL")
+      return(NULL)
+    } else if (x[i] %% 1 != 0) {
+      type_check <- TRUE
+      break
+    }
+  }
+  if(!is.vector(x) || type_check) {
+    warning("Input is not an integer vector, coercing all values in vector x using as.integer...")
+    x <- as.integer(x)
+  }
   primes <- rep(TRUE, length(x))
   for (i in 1:length(x)) {
     if (x[i] <= 1) {
@@ -169,8 +193,15 @@ get_factors <- function(x) {
   # Return:
   #   list of length 2(primes = integer-vector(any length),exponents = integer-vector(any length))
   # Error handling: 
-  if(!is.integer(x)) {
-    warning("get_factors: Input x is not an integer, coercing x using as.integer...")
+  if (!is.numeric(x) && !is.integer(x)) {
+    warning("get_factors: Inputs are not integers/numeric, coercing x using as.integer...")
+    x <- as.integer(x)
+    if (is.na(x)) {
+      warning("get_factors: Coercion resulted in NA values, function returns NULL")
+      return(NULL)
+    }
+  } else if (x %% 1 != 0) {
+    warning("get_factors: Inputs are not whole numbers, coercing x using as.integer...")
     x <- as.integer(x)
   }
   answer <- list(primes = c(), exponents = c())
