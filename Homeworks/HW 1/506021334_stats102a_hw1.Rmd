@@ -3,6 +3,9 @@ title: "506021334 Stats102A HW1"
 author: "Bryan Mui"
 date: "2025-01-16"
 output: pdf_document
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
 
 ```{r setup, include=FALSE}
@@ -19,7 +22,11 @@ source("./506021334_stats102a_hw1.R")
 
 ### Problem 1
 
-#### Function: gcd()
+**Function: gcd()**\
+implementation(using recursion):\
+recursively call gcd() with arguments (y, x mod y)\
+break recursion when y == 0,\
+return abs(x)
 
 ```{r gcd}
 # Error handling test case
@@ -30,7 +37,13 @@ gcd(48, 18L) # 6
 gcd(180, 25L) # 5
 gcd(-42112, 56399) # 7
 ```
-#### Function: gcdi()
+
+**Function: gcdi()**\
+Implementation:\
+initialize answer as first element in vector\
+for all elements in input vector v:\
++ calculate gcd(answer, next element)\
+return answer
 
 ```{r gcdi}
 # Error handling test cases
@@ -44,7 +57,9 @@ gcdi(c(4789, 6123, 19927334)) # 1
 
 ### Problem 2
 
-#### Function: lcm()
+**Function: lcm()**\
+Implementation: using the gcd() function,\
+return \|a \* b\| / gcd(a, b)
 
 ```{r lcm}
 # Error handling test case
@@ -56,7 +71,11 @@ lcm(123, 4920) # 4920
 lcm(8675309, 9876543) # ~8.5682062377 * 10^13
 ```
 
-#### Function: add_2_frac()
+**Function: add_2_frac()**\ 
+Implementation: calculate denominator using lcm(d1, d2)\
+calculate numerator using the formula: ((denom / d1) \* n1) + ((denom /
+d2) \* n2)\
+return list, where num=numerator and denom=denomiator
 
 ```{r add_2_frac}
 # Error handling test case
@@ -70,7 +89,24 @@ add_2_frac(2468, 3579, 1357, 2468) # 10947727 / 8832972
 
 ### Problem 3
 
-#### Function: is_prime()
+**Function: is_prime()**\  
+Implementation:\
+initialize logical vector of length x as FALSE\
+for all values in vector x:
+
+-   if number is less than or equal to 1, set num as not prime
+
+-   if number is 2 or 3, set num as prime
+
+-   if number is greater than or equal to 4 AND even, set as not prime
+
+-   else if floor(sqrt(x)) is less than 3, number is prime
+
+-   for all odd numbers \<= floor(sqrt(x)):
+
+    +   if any x mod (odd number) is 0, set num as not prime
+
+return answer as logical vector
 
 ```{r is_prime}
 # Error handling test case
@@ -82,7 +118,25 @@ is_prime(c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) # [FALSE TRUE TRUE FALSE TRUE FALSE T
 is_prime(c(29, 97, 143, 169, 221, 323, 377, 493, 541, 599)) # [TRUE TRUE FALSE FALSE FALSE FALSE FALSE FALSE TRUE TRUE]
 ```
 
-#### Function: get_factors()
+**Function: get_factors()**\
+Implementation:\
+initialize answer as list(primes, exponents)\
+initialize copy of x\
+initialize increment starting at 2\
+while x is greater than 1:
+
+-   if x mod incr == 0:
+
+    +   divide x by incr
+
+    +   add prime if incr not in prime, otherwise add 1 to exponent for
+        that prime
+
+-   else:  
+
+    +   add 1 to incr repeadetly until incr is prime(using is_prime())
+
+return answer as list
 
 ```{r get_factors}
 # Error handling test case
@@ -99,4 +153,3 @@ if (this_works) {
 get_factors(1920) # list(primes = [2 3 5], exponents = [7 1 1])
 print(get_factors(1532512)) # list(primes = [2 83 577], exponents = [5 1 1])
 ```
-
