@@ -34,6 +34,10 @@ gcdi <- function(v) {
   # Return:
   #   integer
   # Error handling:
+  if(length(v) < 2 | length(v) > 1000) {
+    warning("input vector length is less than 2 or greater than 1000, function returns NULL")
+    return(NULL)
+  }
   if (is.list(v)) {
     warning("input is not a vector, function returns NULL")
     return(NULL)

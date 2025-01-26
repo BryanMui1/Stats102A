@@ -47,7 +47,7 @@ return answer
 
 ```{r gcdi}
 # Error handling test cases
-gcdi(c(4.2, 4.5, 124L)) # 4
+gcdi(c(4.2)) # NULL
 gcdi(list("TRUE", 1, 2.6, FALSE)) # NULL
 gcdi(c(2.2, 9.6, "HELLO")) # NULL
 # in class test cases
