@@ -5,17 +5,48 @@ date: "2025-01-29"
 output: pdf_document
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, warning=FALSE, echo=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-
-```{r}
+```{r, warning=FALSE, echo=FALSE}
+library(tidyverse)
 source("./506021334_stats102a_hw2.R")
+set.seed(506021334)
 ```
 
-```{r}
+# Problem 1
+
+## 1a, create a simulated dataset
+
+simulate():  \
+generate 100 UIDs starting from 100000000 \
+Create homework 1-5 and quiz 1-7, using floor and runif to get a randomized value between 1-100 \
+
+
+```{r, 1a}
 data <- simulate_data()
-data
+head(data)
 ```
+
+## 1b) write R code in the R markdown file to randomly replace 10% of the values in HW1, HW5, and Quiz3 with NA values. Use is.na() and sum() to display the results
+
+Algorithm:  \
+generate random indices as a logical vector(replace or not replace)  \
+subset the data and replace TRUE index with NA \
+
+```{r, 1b}
+data$Homework1 <- replace_10_percent(data$Homework1)
+data$Homework5 <- replace_10_percent(data$Homework5)
+data$Quiz3 <- replace_10_percent(data$Quiz3)
+
+# summary of the replacements:
+data %>%
+  select(Homework1, Homework5, Quiz3) %>%
+  summarise(sum(is.na(.)))
+
+# 30 data points total were replaced as NA
+```
+
+## 1c) Write a function messy_impute() that imputes using missing values in the gradebook 
 
