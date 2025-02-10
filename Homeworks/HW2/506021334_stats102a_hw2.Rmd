@@ -19,9 +19,9 @@ set.seed(506021334)
 
 ## 1a, create a simulated dataset
 
-simulate():  \
-generate 100 UIDs starting from 100000000 \
-Create homework 1-5 and quiz 1-7, using floor and runif to get a randomized value between 1-100 \
+simulate():  \ 
+generate 100 UIDs starting from 100000000 \ 
+Create homework 1-5 and quiz 1-7, using floor and runif to get a randomized value between 1-100 \ 
 
 
 ```{r, 1a_fin}
@@ -34,9 +34,9 @@ head(gradebook)
 
 ## 1b) write R code in the R markdown file to randomly replace 10% of the values in HW1, HW5, and Quiz3 with NA values. Use is.na() and sum() to display the results
 
-Algorithm:  \
-generate random indices as a logical vector(replace or not replace)  \
-subset the data and replace TRUE index with NA \
+Algorithm: replace_10_percent()  \  
+generate random indices as a logical vector(replace or not replace)  \ 
+subset the data and replace TRUE index with NA \ 
 
 ```{r, 1b_fin}
 gradebook$Homework_1 <- replace_10_percent(gradebook$Homework_1)
@@ -52,6 +52,19 @@ cat("30 data points should be replaced as NA.")
 ```
 
 ## 1c) Write a function messy_impute() that imputes using missing values in the gradebook 
+algorithm: messy_impute() \ 
+set argument defaults \ 
+check if center is mean, median, or min; throw error if none of the above \ 
+check if margin is 1 or 2 \ 
+case: columns(margin=1): \ 
+  use select and summarize to apply the function across column \ 
+case: rows(margin=2): \ 
+  check if the selected assignment is homework or quiz \ 
+  use filter to select the row and apply the function across row \ 
+```{r, 1c}
+
+```
+
 
 ## 1d) Please select one student whose quiz or homework has undergone imputation to showcase your function
 
@@ -75,5 +88,9 @@ head(gradebook_tidy, 15)
 ```
 
 ## 1f) Write a function tidy impute() that imputes missing values in gradebook tidy object
+
+algorithm: tidy_impute(): \  
+
+
 
 ## 1g) Please use the cases you select from (d) to demonstrate your function in the R markdown

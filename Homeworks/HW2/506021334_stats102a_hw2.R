@@ -49,3 +49,16 @@ replace_10_percent <- function(x) {
   x
 }
 
+# 1c messy_impute() imputes using missing values in the gradebook 
+messy_impute <- function(data, ) {
+  # messy_impute():
+  # inputs:
+  #   data: gradebook tibble
+  #   center: character obj: "mean, median, min", function to be imputed
+  #   margin: integer: 1 or 2(column wise or row wise)
+  #   trim: numeric(0-1) percentage, lower/upper percent of values to discard before imputation
+}
+ 
+
+# 1d tidy impute(): imputes missing values in a gradebook tidy object
+
