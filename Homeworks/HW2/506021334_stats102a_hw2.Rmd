@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, warning=FALSE, echo=FALSE, inlude=FALSE}
+```{r, warning=FALSE, echo=FALSE, include=FALSE}
 library(tidyverse)
 source("./506021334_stats102a_hw2.R")
 set.seed(506021334)
@@ -49,6 +49,9 @@ gradebook %>%
   summarise(sum(is.na(.)))
 
 cat("30 data points should be replaced as NA.")
+
+# peek the NA values
+head(gradebook, 20)
 ```
 
 ## 1c) Write a function messy_impute() that imputes using missing values in the gradebook 
@@ -57,20 +60,34 @@ set argument defaults \
 check if center is mean, median, or min; throw error if none of the above \ 
 check if margin is 1 or 2 \ 
 case: columns(margin=1): \ 
-  use select and summarize to apply the function across column \ 
+  for every column in the data frame: \ 
+  summarize by imputing function on each column \ 
 case: rows(margin=2): \ 
-  check if the selected assignment is homework or quiz \ 
-  use filter to select the row and apply the function across row \ 
-```{r, 1c}
-
+  check the column splits between homeworks and quizes \ 
+  create a vector of indices subsets for quizzes and homeworks \ 
+  use filter to select the row and apply the impute function on the quiz set and column set of the data \ 
+  
+**function implemented in R file**
+  
+```{r, 1c_fin}
+# gradebook[[3]]
+head(gradebook, 20)
+head(messy_impute(gradebook, "min", margin=2, trim=0), 20)
 ```
 
 
 ## 1d) Please select one student whose quiz or homework has undergone imputation to showcase your function
 
+```{r 1d}
+# Row 2 has a NA value
+head(messy_impute(gradebook, "mean", 1))
+head(messy_impute(gradebook, "median", 2))
+```
+
+
 ## 1e) Write R code using the main functions in the tidyr package to convert the gradebook into the tidy format
 
-```{r}
+```{r 1e_fin}
 # Convert gradebook to tidy 
 gradebook_tidy <- gradebook %>%
   pivot_longer(
@@ -90,7 +107,33 @@ head(gradebook_tidy, 15)
 ## 1f) Write a function tidy impute() that imputes missing values in gradebook tidy object
 
 algorithm: tidy_impute(): \  
-
+set argument defaults \ 
+check if center is mean, median, or min; throw error if none of the above \ 
+check if margin is 1 or 2 \ 
+find distinct uid names \ 
+case: columns(margin=1): \ 
+  for every uid for that assignment(subsetted from distinct uid names) \ 
+  impute on the correct function \ 
+case: rows(margin=2): \ 
+  select rows with filter for correct UID and homework/quizzes\ 
+  apply the impute function on the quiz set and column set of the data \ 
+  
+**function declared in R script**
+```{r, warning=FALSE}
+tidy_impute(gradebook_tidy, "mean", margin=1, trim=0)
+```
 
 
 ## 1g) Please use the cases you select from (d) to demonstrate your function in the R markdown
+
+```{r}
+head(tidy_impute(gradebook_tidy, "mean", 1))
+head(tidy_impute(gradebook_tidy, "median", 2))
+```
+
+
+# Section 2
+
+## 1a find 3 examples of messy data
+
+one example would be a beauty ratings conditions data set, that has reviewers and the columns with the various subjects so the data is not tidy because the multiple reviews of all the subjects are on one row. Another would be election data, which would show a table with the election results for democrats/republicans and the columns would be each year, and each data point would be the election votes. This would be easier to visualize but is not tidy, because there are multiple observations per row. One final example might be the gradebook in the homework. Each row is a UID, and assignments and quizes are in the columns. Data would be stored this way so that it is easy to look up each student and then see their grades for all the exams. However, there are multiple scores per row, which would mean that there is more than one observation per row in the example. 
