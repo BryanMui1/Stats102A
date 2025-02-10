@@ -7,23 +7,29 @@ simulate_data <- function() {
   # simulate_data() returns simulated data as a gradebook with 100 studenst
   # inputs: none 
   # outputs: a tibble(100 x 14), with UID, homeworks 1-5, and quizzes 1-7
-  # Error handling: none, there are no parameters to the function
+  # Error handling: check function that the max is 100 and min is 0 for all scores in the gradebook
   # use floor and runif to generate random values
-  UID <- as.numeric(100000000:(100000000+99))
-  Homework1 <- floor(runif(n=100, min=0, max=100))
-  Homework2 <- floor(runif(n=100, min=0, max=100))
-  Homework3 <- floor(runif(n=100, min=0, max=100))
-  Homework4 <- floor(runif(n=100, min=0, max=100))
-  Homework5 <- floor(runif(n=100, min=0, max=100))
-  Quiz1 <- floor(runif(n=100, min=0, max=100))
-  Quiz2 <- floor(runif(n=100, min=0, max=100))
-  Quiz3 <- floor(runif(n=100, min=0, max=100))
-  Quiz4 <- floor(runif(n=100, min=0, max=100))
-  Quiz5 <- floor(runif(n=100, min=0, max=100))
-  Quiz6 <- floor(runif(n=100, min=0, max=100))
-  Quiz7 <- floor(runif(n=100, min=0, max=100))
-  tibble(UID, Homework1, Homework2, Homework3, Homework4, Homework5,
-         Quiz1, Quiz2, Quiz3, Quiz4, Quiz5, Quiz6, Quiz7)
+  UID <- sample(100000000:999999999, 100, replace=FALSE)
+  Homework_1 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Homework_3 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Homework_4 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Homework_5 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Homework_2 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_1 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_2 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_3 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_4 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_5 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_6 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  Quiz_7 <- sapply(round(rnorm(100, mean=75, sd=15)), function(x) min(x, 100))
+  # Error handling: check that all variables have correct max and min
+  data <- c(Homework_1, Homework_2, Homework_3, Homework_4, Homework_5,
+            Quiz_1, Quiz_2, Quiz_3, Quiz_4, Quiz_5, Quiz_6, Quiz_7)
+  if(max(data) > 100 || min(data) < 0) {
+    warning("Data exceeds 100 or below 0, bounds are incorrect")
+  }
+  tibble(UID, Homework_1, Homework_2, Homework_3, Homework_4, Homework_5,
+         Quiz_1, Quiz_2, Quiz_3, Quiz_4, Quiz_5, Quiz_6, Quiz_7)
 }
 
 # 1b replace 10% of the values with NA in HW 1, HW 5, and Quiz 3

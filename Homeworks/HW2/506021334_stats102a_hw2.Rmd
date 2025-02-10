@@ -9,7 +9,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, warning=FALSE, echo=FALSE}
+```{r, warning=FALSE, echo=FALSE, inlude=FALSE}
 library(tidyverse)
 source("./506021334_stats102a_hw2.R")
 set.seed(506021334)
@@ -24,9 +24,12 @@ generate 100 UIDs starting from 100000000 \
 Create homework 1-5 and quiz 1-7, using floor and runif to get a randomized value between 1-100 \
 
 
-```{r, 1a}
-data <- simulate_data()
-head(data)
+```{r, 1a_fin}
+gradebook <- simulate_data()
+# arrange by increasing UID 
+gradebook <- gradebook %>%
+  arrange(UID)
+head(gradebook)
 ```
 
 ## 1b) write R code in the R markdown file to randomly replace 10% of the values in HW1, HW5, and Quiz3 with NA values. Use is.na() and sum() to display the results
@@ -35,18 +38,42 @@ Algorithm:  \
 generate random indices as a logical vector(replace or not replace)  \
 subset the data and replace TRUE index with NA \
 
-```{r, 1b}
-data$Homework1 <- replace_10_percent(data$Homework1)
-data$Homework5 <- replace_10_percent(data$Homework5)
-data$Quiz3 <- replace_10_percent(data$Quiz3)
+```{r, 1b_fin}
+gradebook$Homework_1 <- replace_10_percent(gradebook$Homework_1)
+gradebook$Homework_5 <- replace_10_percent(gradebook$Homework_5)
+gradebook$Quiz_3 <- replace_10_percent(gradebook$Quiz_3)
 
 # summary of the replacements:
-data %>%
-  select(Homework1, Homework5, Quiz3) %>%
+gradebook %>%
+  select(Homework_1, Homework_5, Quiz_3) %>%
   summarise(sum(is.na(.)))
 
-# 30 data points total were replaced as NA
+cat("30 data points should be replaced as NA.")
 ```
 
 ## 1c) Write a function messy_impute() that imputes using missing values in the gradebook 
 
+## 1d) Please select one student whose quiz or homework has undergone imputation to showcase your function
+
+## 1e) Write R code using the main functions in the tidyr package to convert the gradebook into the tidy format
+
+```{r}
+# Convert gradebook to tidy 
+gradebook_tidy <- gradebook %>%
+  pivot_longer(
+    cols = -UID,
+    names_to = "Assesment",
+    values_to = "Score"
+  ) %>%
+  separate(
+    col = Assesment,
+    into = c("Assesment", "Number"),
+    sep = "_"
+  ) %>%
+  mutate(Number=as.numeric(.$Number))
+head(gradebook_tidy, 15)
+```
+
+## 1f) Write a function tidy impute() that imputes missing values in gradebook tidy object
+
+## 1g) Please use the cases you select from (d) to demonstrate your function in the R markdown
