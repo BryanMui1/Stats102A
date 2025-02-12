@@ -1,0 +1,76 @@
+---
+title: "HW 3"
+author: "Bryan Mui - UID 506021334"
+date: "2025-02-12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Section 1: Cook's relational data
+
+library and read csv files: 
+
+```{r lib_and_read_csv, warning=FALSE, echo=FALSE}
+library(tidyverse)
+recipe <- read_csv("recipe.csv")
+ingredient <- read_csv("ingredient.csv")
+stock <- read_csv("stock.csv")
+food_item <- read_csv("food_item.csv")
+```
+
+### 1a) Write R code to return the types of food and the total calories for each type to make a turkey burger from the recipe.
+
+```{r 1a_fin}
+# need to output calories, food type for turkey burger 
+a1 <- recipe %>% 
+  transmute(recipe=name) %>% 
+  left_join(ingredient, by="recipe") %>% 
+  rename(item=food_item) %>%
+  left_join(food_item, by="item") %>% 
+  filter(recipe=="Turkey Burger") %>%
+  select(recipe, item, type, calories)
+a1
+```
+
+### 1b) Write R code to return all recipes containing both bread and tomato products with their weights on these two ingredients.
+
+```{r 1b}
+b1 <- ingredient %>% 
+  # filter(food_item=="Tomato" | food_item=="Tomato Sauce") %>%
+  # left_join(ingredient, by="recipe")
+  # filter(food_item=="Bread" | food_item=="Tomato" | food_item=="Tomato Sauce")
+  filter(food_item=="Tomato" | food_item=="Tomato Sauce") #%>%
+  # pull(recipe) %>% 
+  # filter(ingredients, food_item %in% unique(.))
+#unique(b1)
+b1
+```
+
+### 1c) Write R code to return the total calories of the beef and turkey burgers.
+
+```{r 1c_fin}
+c1 <- ingredient %>%
+  rename(item=food_item) %>%
+  right_join(food_item, by="item") %>%
+  rename(kcal_per_oz=calories) %>% 
+  mutate(kcal_total=kcal_per_oz*`weight (oz)`) %>%
+  group_by(recipe) %>% 
+  summarize(total_calories=sum(kcal_total)) %>%
+  filter(recipe=="Beef Burger" | recipe=="Turkey Burger")
+c1
+```
+
+### 1d) Write R code to return all vegetable items sold at either ‘W-Mart’ or ‘Food Warehouse’ and display which shop offers the lowest price for each item. 
+
+```{r 1d}
+d1 <- food_item %>%
+  rename(food_item=item) %>%
+  left_join(stock, by="food_item") %>%
+  filter(type=="Vegetables", shop=="W-Mart" | shop=="Food warehouse") %>%
+  arrange(shop)
+d1
+```
+
