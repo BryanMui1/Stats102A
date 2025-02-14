@@ -38,14 +38,19 @@ a1
 ### 1b) Write R code to return all recipes containing both bread and tomato products with their weights on these two ingredients.
 
 ```{r 1b}
-b1 <- ingredient %>% 
-  # filter(food_item=="Tomato" | food_item=="Tomato Sauce") %>%
-  # left_join(ingredient, by="recipe")
-  # filter(food_item=="Bread" | food_item=="Tomato" | food_item=="Tomato Sauce")
-  filter(food_item=="Tomato" | food_item=="Tomato Sauce") #%>%
-  # pull(recipe) %>% 
-  # filter(ingredients, food_item %in% unique(.))
-#unique(b1)
+# b1 <- ingredient %>% 
+#   rename(item=food_item) %>%
+#   left_join(food_item, by="item") %>%
+#   rename(food_item=item) %>%
+#   filter(food_item=="Tomato" | food_item=="Bread" | food_item=="Tomato Sauce") %>%
+#   group_by(recipe) %>%
+#   filter(any(type=="Bread"))
+# try to join food_item, and then group by ingredient and bread product and tomato will have different types!
+b1 <- ingredient %>%
+  group_by(recipe) %>%
+  filter(food_item=="Tomato" | food_item=="Bread" | food_item=="Tomato Sauce") %>%
+  filter(any(food_item=="Bread")) %>%
+  summarize(sum_bread_and_tomato=sum(`weight (oz)`))
 b1
 ```
 
@@ -72,5 +77,12 @@ d1 <- food_item %>%
   filter(type=="Vegetables", shop=="W-Mart" | shop=="Food warehouse") %>%
   arrange(shop)
 d1
+```
+
+
+### 1e) Write R code to return the recipes with the total calories that contain “Wheat product”.
+
+```{r}
+
 ```
 
