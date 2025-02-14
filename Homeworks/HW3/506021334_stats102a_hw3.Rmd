@@ -9,6 +9,11 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Things to ask \n
+* ask if part 1 should be in the R script
+* ask about 1d 
+
+
 ## Section 1: Cook's relational data
 
 library and read csv files: 
@@ -37,15 +42,7 @@ a1
 
 ### 1b) Write R code to return all recipes containing both bread and tomato products with their weights on these two ingredients.
 
-```{r 1b}
-# b1 <- ingredient %>% 
-#   rename(item=food_item) %>%
-#   left_join(food_item, by="item") %>%
-#   rename(food_item=item) %>%
-#   filter(food_item=="Tomato" | food_item=="Bread" | food_item=="Tomato Sauce") %>%
-#   group_by(recipe) %>%
-#   filter(any(type=="Bread"))
-# try to join food_item, and then group by ingredient and bread product and tomato will have different types!
+```{r 1b_fin}
 b1 <- ingredient %>%
   group_by(recipe) %>%
   filter(food_item=="Tomato" | food_item=="Bread" | food_item=="Tomato Sauce") %>%
@@ -74,15 +71,31 @@ c1
 d1 <- food_item %>%
   rename(food_item=item) %>%
   left_join(stock, by="food_item") %>%
-  filter(type=="Vegetables", shop=="W-Mart" | shop=="Food warehouse") %>%
-  arrange(shop)
+  rename(price=`price (US dollars per lb)`) %>%
+  filter(type=="Vegetables", shop=="W-Mart" | shop=="Food warehouse")
 d1
 ```
 
 
 ### 1e) Write R code to return the recipes with the total calories that contain “Wheat product”.
 
-```{r}
+```{r 1e_fin}
+e1 <- ingredient %>% 
+  rename(item=food_item) %>%
+  left_join(food_item, by="item") %>%
+  group_by(recipe) %>%
+  filter(any(type=="Wheat product")) %>% 
+  mutate(kcal_calc=(`weight (oz)` * calories)) %>%
+  summarize(total_kcal=sum(kcal_calc))
+e1
+```
 
+
+## Section 2: Regular Expression Exercises 
+
+### Find names.txt and write regex patterns to answer following questions.
+
+```{r}
+txt <- readLines("./names.txt")
 ```
 
