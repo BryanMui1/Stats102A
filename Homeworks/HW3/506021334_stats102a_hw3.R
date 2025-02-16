@@ -1,4 +1,8 @@
 # Section 1
+recipe <- read_csv("recipe.csv")
+ingredient <- read_csv("ingredient.csv")
+stock <- read_csv("stock.csv")
+food_item <- read_csv("food_item.csv")
 
 # 1a
 # need to output calories, food type for turkey burger
