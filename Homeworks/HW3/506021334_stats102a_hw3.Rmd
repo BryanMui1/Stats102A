@@ -61,7 +61,7 @@ e1
 
 ## Section 2: Regular Expression Exercises 
 
-Find names.txt and write regex patterns to answer following questions.
+### Part 1: Find names.txt and write regex patterns to answer following questions.
 
 ### 1a) Find all usernames that contain at least one numeric character.
 
@@ -80,7 +80,7 @@ str_view(txt, pat_1_a)
 ### 1b) Find all usernames that are exactly four characters long and consist only of alphabetic characters.
 
 ```{r 2_1b}
-pat_1_b <- "\\b[a-zA-z][a-zA-z][a-zA-z][a-zA-z]"
+pat_1_b <- "\\A[[:alpha:]][[:alpha:]][[:alpha:]][[:alpha:]]\\Z"
 str_view(txt, pat_1_b)
 ```
 ### 1c) Find all usernames following the conventional name format, where the given name precedes the family name, with optional additional names in-between. Each name segment is separated by a single white space and should begin with an uppercase letter followed by one or more lowercase letters. Note that intermediate names should also start with an uppercase letter followed by zero or more lowercase letters.
@@ -90,8 +90,48 @@ pat_1_c <- "\\b[a-zA-z][a-zA-z][a-zA-z][a-zA-z]"
 str_view(txt, pat_1_c)
 ```
 
-Find cards.txt and write the regex patterns to identify all the valid card numbers with the correct formatting rules:
+### Part 2: Find cards.txt and write the regex patterns to identify all the valid card numbers with the correct formatting rules:
   + A Master card number begins with a 5 and it is exactly 16 digits long.
   + A Visa card number begins with a 4 and it is between 13 and 16 digits long
   
+```{r read_cards}
+cards <- readLines("./cards.txt")
+cards
+```
 
+### 2a) Write a regex pattern to match valid Master card number and print all the valid numbers, grouped into sets of 4 separated by a single space.
+
+```{r 2_2a}
+# Valid master card numbers 
+pat_2_a <- "5.{15}"
+str_view(cards, pat_2_a)
+```
+
+### 2b) Write a regex pattern to match valid Visa card number and print all the valid numbers, grouped into sets of 4 separated by a single space.
+
+```{r 2_2b}
+
+```
+
+
+### Part 3: Find the passwords.txt and write regex patterns to answer the following questions.
+
+```{r read_cards}
+passwords <- readLines("./passwords.txt")
+passwords
+```
+
+### 3a) Write a regex pattern to identify the passwords that satisfies the requirements below.
+  + Minimum 8 characters
+  + Must contain at least one letter
+  + Must contain at least one digit
+
+```{r 2_3a}
+
+```
+
+  
+  
+  
+  
+  
