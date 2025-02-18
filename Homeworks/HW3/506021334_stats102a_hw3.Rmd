@@ -103,14 +103,16 @@ cards
 
 ```{r 2_2a}
 # Valid master card numbers 
-pat_2_a <- "5[[:digit:]]{3}"
+pat_2_a <- "^5[[:digit:]]{3}[ ]*([[:digit:]]{4}[ ]*){3}$"
 str_view(cards, pat_2_a)
 ```
 
 ### 2b) Write a regex pattern to match valid Visa card number and print all the valid numbers, grouped into sets of 4 separated by a single space.
 
 ```{r 2_2b}
-
+# Valid Visa card numbers
+pat_2_b <- "^4[[:digit:]]{3}[ ]*([[:digit:]]{4}[ ]*){2}[[:digit:]]{1,4}$"
+str_view(cards, pat_2_b)
 ```
 
 
@@ -127,7 +129,8 @@ passwords
   + Must contain at least one digit
 
 ```{r 3_a}
-
+pat_3_a <- "(?=\\d{1,8})(?=[[:alpha:]]{1,8}).{8,}"
+str_view(passwords, pat_3_a)
 ```
 
   
@@ -148,24 +151,27 @@ passwords
 
 ```{r read_wordlists}
 load("./wordlists.RData")
-wordlists
 ```
 
 ```{r 4_a}
-
+wordlists$Ranges
+pat_4_a <- "a"
+str_view(wordlists$Ranges$x, pat_4_a)
+cat("-------------BREAK---------------\n")
+str_view(wordlists$Ranges$y, pat_4_a)
 ```
 
 
 ### b) Backrefs
 
 ```{r 4_b}
-
+wordlists$Backrefs
 ```
 
-### c) Primt
+### c) Prime
 
 ```{r 4_c}
-
+wordlists$Prime  
 ```
 
 
