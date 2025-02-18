@@ -80,13 +80,13 @@ str_view(txt, pat_1_a)
 ### 1b) Find all usernames that are exactly four characters long and consist only of alphabetic characters.
 
 ```{r 2_1b}
-pat_1_b <- "\\A[[:alpha:]][[:alpha:]][[:alpha:]][[:alpha:]]\\Z"
+pat_1_b <- "\\A[[:alpha:]]{4}\\Z"
 str_view(txt, pat_1_b)
 ```
 ### 1c) Find all usernames following the conventional name format, where the given name precedes the family name, with optional additional names in-between. Each name segment is separated by a single white space and should begin with an uppercase letter followed by one or more lowercase letters. Note that intermediate names should also start with an uppercase letter followed by zero or more lowercase letters.
 
 ```{r 2_1c}
-pat_1_c <- "\\b[a-zA-z][a-zA-z][a-zA-z][a-zA-z]"
+pat_1_c <- "\\A[A-Z][a-z]+ [[:alpha:]]* [A-Z][a-z]+\\Z"
 str_view(txt, pat_1_c)
 ```
 
@@ -103,7 +103,7 @@ cards
 
 ```{r 2_2a}
 # Valid master card numbers 
-pat_2_a <- "5.{15}"
+pat_2_a <- "5[[:digit:]]{3}"
 str_view(cards, pat_2_a)
 ```
 
@@ -116,7 +116,7 @@ str_view(cards, pat_2_a)
 
 ### Part 3: Find the passwords.txt and write regex patterns to answer the following questions.
 
-```{r read_cards}
+```{r read_passwords}
 passwords <- readLines("./passwords.txt")
 passwords
 ```
@@ -126,12 +126,48 @@ passwords
   + Must contain at least one letter
   + Must contain at least one digit
 
-```{r 2_3a}
+```{r 3_a}
 
 ```
 
   
-  
-  
-  
-  
+### 3b) Write a regex pattern to identify the passwords that satisfies the requirements below
++ Minimum 8 characters
++ Must contain at least one uppercase character
++ Must contain at least one lowercase character
++ Must contain at least one digit
++ Must contain at least one punctuation character
+
+```{r 3_b}
+
+```
+
+### Part 4: Please load wordlists.RData to R and write regular expression patterns which will match all of the values in x and none of the values in y.
+
+### a) Ranges
+
+```{r read_wordlists}
+load("./wordlists.RData")
+wordlists
+```
+
+```{r 4_a}
+
+```
+
+
+### b) Backrefs
+
+```{r 4_b}
+
+```
+
+### c) Primt
+
+```{r 4_c}
+
+```
+
+
+
+
