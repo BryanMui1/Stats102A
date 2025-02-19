@@ -86,7 +86,7 @@ str_view(txt, pat_1_b)
 ### 1c) Find all usernames following the conventional name format, where the given name precedes the family name, with optional additional names in-between. Each name segment is separated by a single white space and should begin with an uppercase letter followed by one or more lowercase letters. Note that intermediate names should also start with an uppercase letter followed by zero or more lowercase letters.
 
 ```{r 2_1c}
-pat_1_c <- "\\A[A-Z][a-z]+ [[:alpha:]]* [A-Z][a-z]+\\Z"
+pat_1_c <- "\\A[A-Z][a-z]+ [[:alpha:]]*[ ]*[A-Z][a-z]+\\Z"
 str_view(txt, pat_1_c)
 ```
 
@@ -129,7 +129,8 @@ passwords
   + Must contain at least one digit
 
 ```{r 3_a}
-pat_3_a <- "(?=\\d{1,8})(?=[[:alpha:]]{1,8}).{8,}"
+# "(?=\\d{1,8})(?=[[:alpha:]]{1,8}).{8,}"
+pat_3_a <- "[0-9]+?"
 str_view(passwords, pat_3_a)
 ```
 
