@@ -9,11 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Things to ask \n
-* 1a, what is the correct kind of output
-* 1b, how to do
-
-
 ## Section 1: Cook's relational data
 
 library and read csv files: 
@@ -71,22 +66,18 @@ txt
 ```
 
 
-```{r 2_1a}
-# remember to store in R file!!!!!!!!!!!!!!!!!!!
-pat_1_a <- "\\d"
+```{r 2_1a_fin}
 str_view(txt, pat_1_a)
 ```
 
 ### 1b) Find all usernames that are exactly four characters long and consist only of alphabetic characters.
 
-```{r 2_1b}
-pat_1_b <- "\\A[[:alpha:]]{4}\\Z"
+```{r 2_1b_fin}
 str_view(txt, pat_1_b)
 ```
 ### 1c) Find all usernames following the conventional name format, where the given name precedes the family name, with optional additional names in-between. Each name segment is separated by a single white space and should begin with an uppercase letter followed by one or more lowercase letters. Note that intermediate names should also start with an uppercase letter followed by zero or more lowercase letters.
 
-```{r 2_1c}
-pat_1_c <- "\\A[A-Z][a-z]+ [[:alpha:]]*[ ]*[A-Z][a-z]+\\Z"
+```{r 2_1c_fin}
 str_view(txt, pat_1_c)
 ```
 
@@ -101,17 +92,15 @@ cards
 
 ### 2a) Write a regex pattern to match valid Master card number and print all the valid numbers, grouped into sets of 4 separated by a single space.
 
-```{r 2_2a}
+```{r 2_2a_fin}
 # Valid master card numbers 
-pat_2_a <- "^5[[:digit:]]{3}[ ]*([[:digit:]]{4}[ ]*){3}$"
 str_view(cards, pat_2_a)
 ```
 
 ### 2b) Write a regex pattern to match valid Visa card number and print all the valid numbers, grouped into sets of 4 separated by a single space.
 
-```{r 2_2b}
+```{r 2_2b_fin}
 # Valid Visa card numbers
-pat_2_b <- "^4[[:digit:]]{3}[ ]*([[:digit:]]{4}[ ]*){2}[[:digit:]]{1,4}$"
 str_view(cards, pat_2_b)
 ```
 
@@ -128,9 +117,7 @@ passwords
   + Must contain at least one letter
   + Must contain at least one digit
 
-```{r 3_a}
-# "(?=\\d{1,8})(?=[[:alpha:]]{1,8}).{8,}"
-pat_3_a <- "[0-9]+?"
+```{r 3_a_fin}
 str_view(passwords, pat_3_a)
 ```
 
@@ -142,8 +129,8 @@ str_view(passwords, pat_3_a)
 + Must contain at least one digit
 + Must contain at least one punctuation character
 
-```{r 3_b}
-
+```{r 3_b_fin}
+str_view(passwords, pat_3_b)
 ```
 
 ### Part 4: Please load wordlists.RData to R and write regular expression patterns which will match all of the values in x and none of the values in y.
@@ -154,9 +141,8 @@ str_view(passwords, pat_3_a)
 load("./wordlists.RData")
 ```
 
-```{r 4_a}
+```{r 4_a_fin}
 wordlists$Ranges
-pat_4_a <- "a"
 str_view(wordlists$Ranges$x, pat_4_a)
 cat("-------------BREAK---------------\n")
 str_view(wordlists$Ranges$y, pat_4_a)
@@ -165,14 +151,20 @@ str_view(wordlists$Ranges$y, pat_4_a)
 
 ### b) Backrefs
 
-```{r 4_b}
+```{r 4_b_fin}
 wordlists$Backrefs
+str_view(wordlists$Backrefs$x, pat_4_b)
+cat("-------------BREAK---------------\n")
+str_view(wordlists$Backrefs$y, pat_4_b)
 ```
 
 ### c) Prime
 
-```{r 4_c}
+```{r 4_c_fin}
 wordlists$Prime  
+str_view(wordlists$Prime$x, pat_4_c)
+cat("-------------BREAK---------------\n")
+str_view(wordlists$Prime$y, pat_4_c)
 ```
 
 
