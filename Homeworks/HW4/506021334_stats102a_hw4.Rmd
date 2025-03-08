@@ -9,6 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# REMEMBER TO MOVE RMD CODE TO R FILE
+
 # Part 1: Dealing with Large Numbers 
 
 ## 1a)
